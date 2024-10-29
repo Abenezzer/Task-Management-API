@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
+require("express-async-errors");
 
 const users = require("./routes/users");
-const error = require('./middlewares/error');
+const error = require("./middlewares/error");
 
 //setup
 const app = express();
@@ -28,7 +29,6 @@ app.get("/", (req, res) => {
 // setup routes
 app.use("/api/users/", users);
 app.use(error);
-
 
 const PORT = process.env.PORT ?? 3000;
 app.listen(PORT, () => console.log(`Server Listning at port ${PORT}...`));
