@@ -2,6 +2,18 @@
   "dependencies": {
     "config": "^3.3.12",
     "express": "^4.21.1",
+    "joi": "^17.13.3",
     "mongoose": "^8.7.3"
-  }
+  },
+  "name": "taskmanagementapi",
+  "version": "1.0.0",
+  "description": "A RESTful API built with Node.js and Express to manage tasks. This API provides user authentication, task creation, and CRUD operations, with each user only able to interact with tasks they create.",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "NODE_ENV=development node --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
