@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 
-
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -71,6 +70,9 @@ userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ id: this._id }, config.get("jwt-secret-key"));
 };
 
+userSchema.methods.comparePassword = async function (plainPassword) {
+  return await bcrypt.compare(plainPassword, this.password);
+};
 const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
