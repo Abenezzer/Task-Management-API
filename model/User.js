@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const bcrypt = require("bcrypt");
+const config = require("config");
+const jwt = require("jsonwebtoken");
+
 
 const taskSchema = new mongoose.Schema({
   title: {
@@ -51,13 +55,29 @@ const userSchema = new mongoose.Schema({
   tasks: [taskSchema],
 });
 
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      this.password = hashedPassword;
+    } catch (err) {
+      next(err);
+      console.log(err);
+    }
+  }
+});
+
+userSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ id: this._id }, config.get("jwt-secret-key"));
+};
+
 const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
   return Joi.object({
     name: Joi.string().min(3).max(255).required(),
     email: Joi.string().email().min(6).max(255).required(),
-    password: Joi.string().min(3).max(255).required(),
+    password: Joi.string().min(6).max(255).required(),
   }).validate(user);
 }
 
