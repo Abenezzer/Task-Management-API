@@ -44,3 +44,8 @@ temp/
 
 # Debugger configurations
 .nyc_output/
+
+# Config Files
+config/development.json
+config/production.json
+config/test.json

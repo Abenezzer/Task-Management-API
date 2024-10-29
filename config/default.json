@@ -1,0 +1,5 @@
+{
+  "name": "Task Management API",
+  "db_string": "",
+  "jwt-secret-key": ""
+}
