@@ -38,3 +38,5 @@ function validateLoginUser(user) {
     password: Joi.string().min(6).max(255).required(),
   }).validate(user);
 }
+
+module.exports = {registerUser, loginUser};
