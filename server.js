@@ -4,7 +4,9 @@ const config = require("config");
 require("express-async-errors");
 
 const users = require("./routes/users");
+const tasks = require('./routes/tasks');
 const error = require("./middlewares/error");
+
 
 //setup
 const app = express();
@@ -28,6 +30,7 @@ app.get("/", (req, res) => {
 
 // setup routes
 app.use("/api/users/", users);
+app.use('/api/tasks/', tasks);
 app.use(error);
 
 const PORT = process.env.PORT ?? 3000;

@@ -3,33 +3,7 @@ const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-
-const taskSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 255,
-  },
-  description: {
-    type: String,
-    minlength: 3,
-    maxlength: 500,
-  },
-  status: {
-    type: String,
-    default: "pending",
-    enum: ["pending", "completed"],
-  },
-  dueDate: {
-    type: Date,
-  },
-  priority: {
-    type: String,
-    default: "MEDIUM",
-    enum: ["LOW", "MEDIUM", "HIGH"],
-  },
-});
+const {taskSchema} = require('./Task');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -83,14 +57,5 @@ function validateUser(user) {
   }).validate(user);
 }
 
-function validateTask(task) {
-  return Joi.object({
-    title: Joi.string().required().min(3).max(255),
-    description: Joi.string().required().min(5).max(255),
-    status: Joi.string().valid("pending", "completed").optional(),
-    dueDate: Joi.date().optional(),
-    priority: Joi.string().valid("LOW", "MEDIUM", "HIGH").optional(),
-  });
-}
 
-module.exports = { User, validateUser, validateTask };
+module.exports = { User, validateUser };

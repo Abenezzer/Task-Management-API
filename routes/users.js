@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
     const { error } = validateUser(req.body);
-    if (error) throw new CustomError(error.details[0].message, 400);
+    if (error) res.status(400).send(error.details[0].message);
     // check if the email is already exist if so return error
     const email = await User.findOne({ email: req.body.email });
     if (email) throw new CustomError("User Already Registered", 400);
